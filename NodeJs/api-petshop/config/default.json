@@ -1,0 +1,11 @@
+{
+  "api": {
+    "port": 3000
+  },
+  "mysql": {
+    "banco": "BD-MYSQL",
+    "usuario": "joaopjk",
+    "senha": "joaopjk",
+    "host": "127.0.0.1"
+  }
+}
