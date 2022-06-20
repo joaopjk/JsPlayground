@@ -16,17 +16,16 @@ async function startHttpServer() {
 }
 
 async function runMigrations() {
-    await execa.node('ace', ['migrations:run'], {
+    await execa.node('ace', ['migration:run'], {
         stdio: 'inherit'
     })
 }
 
 async function rollbackMigrations() {
-    await execa.node('ace', ['migrations:rollback'], {
+    await execa.node('ace', ['migration:rollback'], {
         stdio: 'inherit'
     })
 }
-
 
 configure({
     files: ['test/**/*.spec.ts'],
