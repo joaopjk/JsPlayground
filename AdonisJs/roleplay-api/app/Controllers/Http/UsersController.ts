@@ -1,14 +1,12 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import BadRequestException from 'App/Exceptions/BadRequestException'
 import User from 'App/Models/User'
+import CreateUserValidator from 'App/Validators/CreateUserValidator'
 
 export default class UsersController {
     public async store({ request, response }: HttpContextContract) {
-        const userPayload = request.only(['email', 'username', 'password', 'avatar'])
-
-        if (!userPayload.email || !userPayload.password || !userPayload.username)
-            throw new BadRequestException('provide require data', 422)
-
+        const userPayload = await request.validate(CreateUserValidator)
+        
         const userByUserName = await User.findBy('username', userPayload.username)
         if (userByUserName)
             throw new BadRequestException('username already in use', 409)
