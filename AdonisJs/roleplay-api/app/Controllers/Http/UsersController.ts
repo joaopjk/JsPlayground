@@ -6,6 +6,9 @@ export default class UsersController {
     public async store({ request, response }: HttpContextContract) {
         const userPayload = request.only(['email', 'username', 'password', 'avatar'])
 
+        if (!userPayload.email || !userPayload.password || !userPayload.username)
+            throw new BadRequestException('provide require data', 422)
+
         const userByUserName = await User.findBy('username', userPayload.username)
         if (userByUserName)
             throw new BadRequestException('username already in use', 409)
