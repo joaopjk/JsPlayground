@@ -78,7 +78,7 @@ test.group("User", (group) => {
     test('it should update an user', async (assert) => {
         const { id, password } = await UserFactory.create()
         const email = 'teste@test.com'
-        const avatar = 'urlQualquer'
+        const avatar = 'https://www.google.com/gmail/'
         const { body } = await supertest(BASE_URL).put(`/users/${id}`)
             .send({
                 email,
@@ -108,6 +108,61 @@ test.group("User", (group) => {
 
         await user.refresh()
         assert.isTrue(await Hash.verify(user.password, password))
+    })
+
+    test("it should return 422 when required data is not provide", async (assert) => {
+        const { id } = await UserFactory.create()
+        const { body } = await supertest(BASE_URL).put(`/users/${id}`)
+            .send({})
+            .expect(422)
+
+        assert.equal(body.code, 'BAD_REQUEST')
+        assert.equal(body.status, 422)
+    })
+
+    test('it should return 422 when providing invalide email', async (assert) => {
+        const { id, password, avatar } = await UserFactory.create()
+        const email = "test@"
+        const { body } = await supertest(BASE_URL).put(`/users/${id}`)
+            .send({
+                email,
+                password,
+                avatar
+            })
+            .expect(422)
+
+        assert.equal(body.code, 'BAD_REQUEST')
+        assert.equal(body.status, 422)
+    })
+
+    test('it should return 422 when providing invalide password', async (assert) => {
+        const { id, email, avatar } = await UserFactory.create()
+        const password = "te"
+        const { body } = await supertest(BASE_URL).put(`/users/${id}`)
+            .send({
+                email,
+                avatar,
+                password
+            })
+            .expect(422)
+
+        assert.equal(body.code, 'BAD_REQUEST')
+        assert.equal(body.status, 422)
+    })
+
+    test('it should return 422 when providing invalide avatar', async (assert) => {
+        const { id, email, password } = await UserFactory.create()
+        const avatar = "te"
+        const { body } = await supertest(BASE_URL).put(`/users/${id}`)
+            .send({
+                email,
+                avatar,
+                password
+            })
+            .expect(422)
+
+        assert.equal(body.code, 'BAD_REQUEST')
+        assert.equal(body.status, 422)
     })
 
     group.beforeEach(async () => {
