@@ -106,7 +106,6 @@ test.group("User", (group) => {
         assert.exists(body.user, 'User undefined')
         assert.equal(body.user.id, user.id)
 
-
         await user.refresh()
         assert.isTrue(await Hash.verify(user.password, password))
     })
