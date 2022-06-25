@@ -12,6 +12,7 @@
   },
   "devDependencies": {
     "@adonisjs/assembler": "^5.8.0",
+    "@adonisjs/mail": "^7.2.2",
     "@types/supertest": "^2.0.12",
     "adonis-preset-ts": "^2.1.0",
     "eslint": "^8.18.0",
