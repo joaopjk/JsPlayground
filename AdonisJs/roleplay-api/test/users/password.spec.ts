@@ -9,15 +9,24 @@ const BASE_URL = `http://${process.env.HOST}:${process.env.PORT}`
 test.group('Password', (group) => {
 
     test.only('it should send and email with forgot password instructions', async (assert) => {
-        const { email } = await UserFactory.create()
+        const user = await UserFactory.create()
 
         Mail.trap((message) => {
             assert.equal(message.subject, 'Roleplay: Recuperação de senha')
+            assert.deepEqual(message.to, [
+                {
+                    address: user.email
+                }
+            ])
+            assert.deepEqual(message.from, {
+                address: 'no-reply@roleplay.com'
+            })
+            assert.equal(message.text, 'Clique no link abaixo para redefinir sua senha')
         })
-        
+
         await supertest(BASE_URL).post('/forgot-password')
             .send({
-                email,
+                email: user.email,
                 resetPasswordUrl: 'https://www.google.com/gmail/'
             }).expect(204)
 
