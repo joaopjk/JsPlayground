@@ -5,6 +5,12 @@ const server = new ApolloServer({
     type Query {
       hello: String
       hi: String
+      id: ID
+      name: String
+      age: Int
+      average: Float
+      truly: Boolean!
+      list: [String!]!
     }
   `,
   resolvers: {
@@ -15,6 +21,14 @@ const server = new ApolloServer({
       hi: () => {
         return 'Hi';
       },
+      id: () => {
+        return '45611-645a44';
+      },
+      name: () => 'João Cícero Vicente Sousa',
+      age: () => 27,
+      average: () => 53.4,
+      truly: () => true,
+      list: () => ['João', 'Cícero', 'Vicente', 'Sousa'],
     },
   },
 });
