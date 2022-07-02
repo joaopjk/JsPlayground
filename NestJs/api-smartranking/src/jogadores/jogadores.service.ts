@@ -1,12 +1,11 @@
 import { Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { CriarJogadorDto } from './dtos/criar-jogador.dto';
 import { Jogador } from './interfaces/jogador.interface';
-import { v4 as uuidV4 } from 'uuid';
 
 @Injectable()
 export class JogadoresService {
   private readonly logger = new Logger(JogadoresService.name);
-  private jogadores: Jogador[] = [];
+  private jogadores: any[] = [];
 
   async consultarJogadores(): Promise<Jogador[]> {
     return this.jogadores;
@@ -40,13 +39,12 @@ export class JogadoresService {
 
   private criar(criarJogadorDto: CriarJogadorDto): void {
     const { nome, telefoneCelular, email } = criarJogadorDto;
-    const jogador: Jogador = {
-      _id: uuidV4(),
+    const jogador = {
       nome,
       telefoneCelular,
       email,
       ranking: 'A',
-      posicaoRaking: 1,
+      posicaoRanking: 1,
       urlFotoJogador: ''
     };
     this.jogadores.push(jogador);
