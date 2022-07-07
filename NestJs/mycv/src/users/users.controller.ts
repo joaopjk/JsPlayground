@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  NotFoundException,
   Param,
   Patch,
   Post,
@@ -17,27 +18,29 @@ export class UsersController {
   constructor(private userService: UsersService) {}
 
   @Post('/signup')
-  createUser(@Body() body: CreateUserDto) {
-    this.userService.create(body.email, body.password);
+  async createUser(@Body() body: CreateUserDto) {
+    await this.userService.create(body.email, body.password);
   }
 
   @Get('/:id')
-  findUser(@Param('id') id: string) {
-    return this.userService.findOne(parseInt(id));
+  async findUser(@Param('id') id: string) {
+    const user = await this.userService.findOne(parseInt(id));
+    if (!user) throw new NotFoundException('User not found');
+    return user;
   }
 
   @Get()
-  findAllUsers(@Query('email') email: string) {
-    return this.userService.find(email);
+  async findAllUsers(@Query('email') email: string) {
+    return await this.userService.find(email);
   }
 
   @Delete('/:id')
-  remove(@Param('id') id: string) {
-    return this.userService.remove(parseInt(id));
+  async remove(@Param('id') id: string) {
+    return await this.userService.remove(parseInt(id));
   }
 
   @Patch('/:id')
-  updateUser(@Param('id') id: string, @Body() body: UpdateUserDto) {
-    return this.userService.update(parseInt(id), body);
+  async updateUser(@Param('id') id: string, @Body() body: UpdateUserDto) {
+    return await this.userService.update(parseInt(id), body);
   }
 }
