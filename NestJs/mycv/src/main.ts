@@ -1,9 +1,16 @@
 import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
 import { AppModule } from './app.module';
+import CookieSession from 'cookie-session';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  app.use(
+    CookieSession({
+      name: 'session',
+      keys: ['ajdkaç'],
+    }),
+  );
   app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
   await app.listen(3000);
 }
