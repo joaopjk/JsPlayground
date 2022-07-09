@@ -39,6 +39,16 @@ export class UsersController {
     return user;
   }
 
+  @Get('/whoami')
+  async whoami(@Session() session: any) {
+    return this.userService.findOne(session.userId);
+  }
+
+  @Post('signout')
+  async signout(@Session() session: any) {
+    session.userId = null;
+  }
+
   //@Serialize(UserDto)
   @Get('/:id')
   async findUser(@Param('id') id: string) {
