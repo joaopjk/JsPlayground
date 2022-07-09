@@ -65,4 +65,14 @@ describe('AuthService', () => {
       BadRequestException,
     );
   });
+
+  it('returns a user if correct password is provided', async () => {
+    const user = await service.signup('dafa@gmail.com', 'asdf');
+    fakeUsersService.find = () =>
+      Promise.resolve([
+        { email: 'dafa@gmail.com', password: user.password } as User,
+      ]);
+    const userTest = await service.signin('dafa@gmail.com', 'asdf');
+    expect(userTest).toBeDefined();
+  });
 });
