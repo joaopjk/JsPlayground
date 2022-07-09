@@ -34,9 +34,6 @@ const subtrair = (a) => (b) => a - b
 const dividir = (a) => (b) => a / b
 console.log(somar(3)(4))
 
-// const calcular = (a) => (b) => (fn) => {
-//   if (typeof fn === 'function') fn(a, b)
-// }
 const calcular = (a) => (b) => (fn) => fn(a)(b)
 
 console.log(calcular(3)(4)(somar))
