@@ -1,1 +1,8 @@
 cdk init --language typescript
+
+npm i aws-sdk @types/aws-lambda @types/uuid --save-dev 
+
+cdk list : Visualizar as stacks do projeto
+cdk deploy --all
+cdk diff
+cdk destroy --all
