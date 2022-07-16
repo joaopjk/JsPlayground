@@ -6,3 +6,4 @@ cdk list : Visualizar as stacks do projeto
 cdk deploy --all
 cdk diff
 cdk destroy --all               
+cdk bootstrap 1 vez por aplicação
