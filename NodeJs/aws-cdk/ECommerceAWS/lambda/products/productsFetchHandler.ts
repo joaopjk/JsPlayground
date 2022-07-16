@@ -20,8 +20,6 @@ export async function handler(event: APIGatewayProxyEvent,
       return {
         statusCode: 200,
         body: JSON.stringify({
-          lambdaRequestId,
-          gateway: gatewayRequestId,
           message: 'Get products - OK'
         })
       }
